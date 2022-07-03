@@ -4,6 +4,7 @@
 #include <list>
 #include <cstdio>
 #include <cassert>
+#include <algorithm>
 
 
 // Задача 5
@@ -37,25 +38,31 @@ int main()
         std::string tmp_string;
         while (getline(fin, line))
         {
+            // из строки брать значение(до запятой), переводить его в int,
+            // проверять на отрицательность - если положительное, пишем в список и продвигаемся дальше,
+            // если нет - заканчиваем заполнять первый список и заполняем второй значениями после отр. числа и до конца строки
+
             int tmp_int;
             tmp_string = line;
             tmp_int = atoi(tmp_string.c_str());
-
-            int counter{0};
-            while (tmp_int > 0)
+            int count{0};
             {
-                C1.push_back(tmp_int);
-                counter++;
-            }
-            line = fseek(ptrFile, counter*sizeof(int), SEEK_SET);
-
-            while (tmp_int > 0 )
-            {
-                C1.push_back(tmp_int);
-                counter++;
+                char ch{'0'};
+                fin >> ch;
+                int ch_int = (int)ch;
+                while ( !fin.eof())
+                {
+                    fin >> ch;
+                    if (ch > 0)
+                        count++;
+                }
+                while (fin >> ch)
+                {
+                    count++;
+                    count--;
+                }
             }
         }
     }
     fin.close();     // закрываем файл
 }
-
