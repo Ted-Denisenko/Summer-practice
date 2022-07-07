@@ -27,42 +27,35 @@ int main()
 {
     std::ifstream fin;
     fin.open("C:\\Code\\summer_practice.txt");
+    char ch{0};
+    std::string tmp;
+    int read_number;
+    bool separator_flag = 0;
+    std::list<int> left_half;
+    std::list<int> right_half;
+    while (fin >> read_number)
+    {
+        if (read_number < 0)
+        {
+            separator_flag = 1;
+            continue;
+        }
+        if (separator_flag == 0)
+            left_half.push_back(read_number);
+        if (separator_flag == 1)
+            right_half.push_back(read_number);
+            
+        //если получили не пробел, то записываем в строку. Строку конвертируем в инт и сравниваем число на отрицательность.
+        // пишем числа в один список, пока не дойдем до отрицательного числа. Ставим флаг разделителя и начинаем писать во второй список
+    }
     FILE* ptrFile;
-    errno_t err = fopen_s(&ptrFile, "C:\\Code\\summer_practice.txt", "r");
-    assert(err == 0 && "File has failed to open!");
-    std::string line;
-    std::list<int> C1;
-    std::list<int> C2;
+    assert(fopen_s(&ptrFile, "C:\\Code\\summer_practice.txt", "r") == 0 && "File has failed to open!");
     if (fin.is_open())
     {
-        std::string tmp_string;
-        while (getline(fin, line))
-        {
-            // из строки брать значение(до запятой), переводить его в int,
+            // из строки брать значение(до пробела): пока не встретим пробел, считаем последовательность как одно число
+            // , переводить его в int,
             // проверять на отрицательность - если положительное, пишем в список и продвигаемся дальше,
             // если нет - заканчиваем заполнять первый список и заполняем второй значениями после отр. числа и до конца строки
-
-            int tmp_int;
-            tmp_string = line;
-            tmp_int = atoi(tmp_string.c_str());
-            int count{0};
-            {
-                char ch{'0'};
-                fin >> ch;
-                int ch_int = (int)ch;
-                while ( !fin.eof())
-                {
-                    fin >> ch;
-                    if (ch > 0)
-                        count++;
-                }
-                while (fin >> ch)
-                {
-                    count++;
-                    count--;
-                }
-            }
-        }
-    }
     fin.close();     // закрываем файл
+    }
 }
