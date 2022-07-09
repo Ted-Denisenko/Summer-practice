@@ -27,12 +27,12 @@ int main()
 {
     std::ifstream fin;
     fin.open("C:\\Code\\summer_practice.txt");
-    char ch{0};
-    std::string tmp;
     int read_number;
     bool separator_flag = 0;
     std::list<int> left_half;
     std::list<int> right_half;
+
+    // читаем файл и разбиваем на два списка
     while (fin >> read_number)
     {
         if (read_number < 0)
@@ -44,18 +44,8 @@ int main()
             left_half.push_back(read_number);
         if (separator_flag == 1)
             right_half.push_back(read_number);
-            
-        //если получили не пробел, то записываем в строку. Строку конвертируем в инт и сравниваем число на отрицательность.
-        // пишем числа в один список, пока не дойдем до отрицательного числа. Ставим флаг разделителя и начинаем писать во второй список
     }
-    FILE* ptrFile;
-    assert(fopen_s(&ptrFile, "C:\\Code\\summer_practice.txt", "r") == 0 && "File has failed to open!");
-    if (fin.is_open())
-    {
-            // из строки брать значение(до пробела): пока не встретим пробел, считаем последовательность как одно число
-            // , переводить его в int,
-            // проверять на отрицательность - если положительное, пишем в список и продвигаемся дальше,
-            // если нет - заканчиваем заполнять первый список и заполняем второй значениями после отр. числа и до конца строки
+
+    // сортируем каждый список
     fin.close();     // закрываем файл
-    }
 }
